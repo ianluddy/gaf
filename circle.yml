@@ -1,0 +1,6 @@
+dependencies:
+  post:
+    - createdb gaf
+    - python runserver.py:
+        background: true
+    - python manage.py create_db
