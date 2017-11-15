@@ -1,6 +1,7 @@
 from gaf.core import db
 from gaf import app
 from datetime import datetime
+from gaf.core import api_manager
 
 # TODO - add indexes
 
@@ -44,7 +45,7 @@ class Listing(db.Model, StampedModel):
         # TODO - implement similar call with less info for search results page
         county = self.county.name if self.county else None
         off_days = [day.id for day in self.days]
-        output = super(Item, self).to_dict()
+        output = super(Listing, self).to_dict()
         output['county'] = county
         del output['days']
         output['off_days'] = off_days
@@ -69,13 +70,6 @@ class Province(db.Model, BaseModel):
         output = super(Province, self).to_dict()
         output['counties'] = counties
         return output
-
-class Message(db.Model, StampedModel):
-
-    id = db.Column(db.Integer, primary_key=True)
-    contract_id = db.Column(db.Integer, db.ForeignKey('contract.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    message = db.Column(db.String, nullable=False)
 
 class Category(db.Model, BaseModel):
 
@@ -102,3 +96,8 @@ class User(db.Model, StampedModel):
         output = super(User, self).to_dict()
         del output['password']
         return output
+
+# Create API endpoints, which will be available at /api/<tablename> by
+# default. Allowed HTTP methods can be specified as well.
+for model in [User, Listing, County, Province, Category]:
+    api_manager.create_api(model, methods=['GET', 'POST', 'DELETE', 'PATCH'])

@@ -45,9 +45,6 @@ class SearchService(Service):
             return self.model_wrapper.search(search, page)
         return super(SearchService, self).get(id)
 
-class CategoryService(Service):
-    model_wrapper = CategoryWrapper()
-
 class CountyService(Service):
     model_wrapper = CountyWrapper()
 

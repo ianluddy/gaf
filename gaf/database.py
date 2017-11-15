@@ -2,7 +2,7 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from gaf.core import api_manager
 from contextlib import contextmanager
-from models import County, Category, User, Province, Message, Listing
+from models import County, User, Province, Listing
 
 @contextmanager
 def session_scope():
@@ -90,17 +90,11 @@ class SearchDatabaseModelWrapper(DatabaseModelWrapper):
 class ListingWrapper(SearchDatabaseModelWrapper):
     model = Listing
 
-class CategoryWrapper(DatabaseModelWrapper):
-    model = Category
-
 class CountyWrapper(DatabaseModelWrapper):
     model = County
 
 class ProvinceWrapper(DatabaseModelWrapper):
     model = Province
-
-class MessageWrapper(DatabaseModelWrapper):
-    model = Message
 
 class UserWrapper(DatabaseModelWrapper):
     model = User
