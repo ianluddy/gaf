@@ -3,7 +3,7 @@ import argparse
 import requests
 from gaf.core import db
 
-seed_order = ['province', 'county', 'user']
+seed_order = ['user']
 
 def create_sample_db_entry(api_endpoint, payload):
     url = 'http://localhost:5000/' + api_endpoint

@@ -1,216 +1,9 @@
 {
-    "province":[
-        {
-            "name": "Connacht"
-        },
-        {
-            "name": "Leinster"
-        },
-        {
-            "name": "Munster"
-        },
-        {
-            "name": "Ulster"
-        }
-    ],
-    "county":[
-        {
-            "name": "Antrim",
-            "province_id": 4,
-            "lat": 54.7195338,
-            "lng": -6.2072498
-        },
-        {
-            "name": "Armagh",
-            "province_id": 4,
-            "lat": 54.3502798,
-            "lng": -6.652791999999977
-        },
-        {
-            "name": "Carlow",
-            "province_id": 2,
-            "lat": 52.8029293,
-            "lng": -6.736268999999993
-        },
-        {
-            "name": "Cavan",
-            "province_id": 4,
-            "lat": 53.9897186,
-            "lng": -7.363331900000048
-        },
-        {
-            "name": "Clare",
-            "province_id": 3,
-            "lat": 52.8439049,
-            "lng": -8.981732400000055
-        },
-        {
-            "name": "Cork",
-            "province_id": 3,
-            "lat": 51.8968917,
-            "lng": -8.486315699999977
-        },
-        {
-            "name": "Derry",
-            "province_id": 4,
-            "lat": 54.9966124,
-            "lng": -7.308574799999974
-        },
-        {
-            "name": "Donegal",
-            "province_id": 4,
-            "lat": 54.8661152,
-            "lng": -7.9954086999999845
-        },
-        {
-            "name": "Down",
-            "province_id": 4,
-            "lat": 54.32769870000001,
-            "lng": -5.715766700000017
-        },
-        {
-            "name": "Dublin",
-            "province_id": 2,
-            "lat": 53.3498053,
-            "lng": -6.260309699999993
-        },
-        {
-            "name": "Fermanagh",
-            "province_id": 4,
-            "lat": 54.343829,
-            "lng": -7.6318727999999965
-        },
-        {
-            "name": "Galway",
-            "province_id": 1,
-            "lat": 53.270668,
-            "lng": -9.056790500000034
-        },
-        {
-            "name": "Kerry",
-            "province_id": 3,
-            "lat": 52.1678937,
-            "lng": -9.525985699999978
-        },
-        {
-            "name": "Kildare",
-            "province_id": 2,
-            "lat": 53.1589342,
-            "lng": -6.909568300000046
-        },
-        {
-            "name": "Kilkenny",
-            "province_id": 2,
-            "lat": 52.6541454,
-            "lng": -7.244787900000006
-        },
-        {
-            "name": "Laois",
-            "province_id": 2,
-            "lat": 52.994295,
-            "lng": -7.332300700000019
-        },
-        {
-            "name": "Leitrim",
-            "province_id": 1,
-            "lat": 54.3049067,
-            "lng": -8.176635300000044
-        },
-        {
-            "name": "Limerick",
-            "province_id": 3,
-            "lat": 52.6680204,
-            "lng": -8.630497500000047
-        },
-        {
-            "name": "Longford",
-            "province_id": 2,
-            "lat": 53.72593,
-            "lng": -7.7930778999999575
-        },
-        {
-            "name": "Louth",
-            "province_id": 2,
-            "lat": 54.00093889999999,
-            "lng": -6.382971999999995
-        },
-        {
-            "name": "Mayo",
-            "province_id": 1,
-            "lat": 53.93458099999999,
-            "lng": -9.351645599999983
-        },
-        {
-            "name": "Meath",
-            "province_id": 2,
-            "lat": 53.64759669999999,
-            "lng": -6.6982212000000345
-        },
-        {
-            "name": "Monaghan",
-            "province_id": 4,
-            "lat": 54.2492046,
-            "lng": -6.968313200000011
-        },
-        {
-            "name": "Offaly",
-            "province_id": 2,
-            "lat": 53.2356871,
-            "lng": -7.712222900000029
-        },
-        {
-            "name": "Roscommon",
-            "province_id": 1,
-            "lat": 53.62912189999999,
-            "lng": -8.188972899999953
-        },
-        {
-            "name": "Sligo",
-            "province_id": 1,
-            "lat": 54.27661029999999,
-            "lng": -8.47608880000007
-        },
-        {
-            "name": "Tipperary",
-            "province_id": 3,
-            "lat": 52.47378940000001,
-            "lng": -8.161851399999932
-        },
-        {
-            "name": "Tyrone",
-            "province_id": 4,
-            "lat": 54.6032023,
-            "lng": -7.094965300000013
-        },
-        {
-            "name": "Waterford",
-            "province_id": 3,
-            "lat": 52.2593197,
-            "lng": -7.110070299999961
-        },
-        {
-            "name": "Westmeath",
-            "province_id": 2,
-            "lat": 53.5345308,
-            "lng": -7.465321700000004
-        },
-        {
-            "name": "Wexford",
-            "province_id": 2,
-            "lat": 52.336916,
-            "lng": -6.463338099999987
-        },
-        {
-            "name": "Wicklow",
-            "province_id": 2,
-            "lat": 52.97986100000001,
-            "lng": -6.048262900000054
-        }
-    ],
     "user":[
         {
             "first":"Ian",
             "last":"Luddy",
+            "type": 1,
             "email":"ianluddy@gmail.com",
             "password":"password",
             "intro":"Hello",
@@ -219,6 +12,7 @@
         {
             "first":"Joe",
             "last":"Bloggs",
+            "type": 1,
             "email":"jb@gmail.com",
             "password":"password",
             "intro":"Hello",
@@ -227,6 +21,7 @@
         {
             "first":"Josephine",
             "last":"Bloggs",
+            "type": 1,
             "email":"jsb@gmail.com",
             "password":"password",
             "intro":"Hello",
@@ -235,6 +30,7 @@
         {
             "first":"James",
             "last":"Bloggs",
+            "type": 1,
             "email":"jmb@gmail.com",
             "password":"password",
             "intro":"Hello",

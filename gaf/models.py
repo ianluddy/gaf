@@ -20,11 +20,11 @@ class StampedModel(BaseModel):
 
     created = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
-class Listing(db.Model, StampedModel):
+class Property(db.Model, StampedModel):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    type = db.Column(db.Integer, nullable=False)
     description = db.Column(db.String)
     address1 = db.Column(db.String)
     address2 = db.Column(db.String)
@@ -32,55 +32,54 @@ class Listing(db.Model, StampedModel):
     postcode = db.Column(db.String)
     image = db.Column(db.String, default="", nullable=False)
     images = db.Column(db.String, default="", nullable=False)
-    lender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    landlord_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     published = db.Column(db.Boolean, default=False, nullable=False)
-    county_id = db.Column(db.Integer, db.ForeignKey('county.id'))
-    county = db.relationship('County')
-    province_id = db.Column(db.Integer, db.ForeignKey('province.id'))
-    province = db.relationship('Province')
+    county_id = db.Column(db.Integer, nullable=False)
+    province_id = db.Column(db.Integer, nullable=False)
     lat = db.Column(db.Float)
     lng = db.Column(db.Float)
 
-    def to_dict(self):
-        # TODO - implement similar call with less info for search results page
-        county = self.county.name if self.county else None
-        off_days = [day.id for day in self.days]
-        output = super(Listing, self).to_dict()
-        output['county'] = county
-        del output['days']
-        output['off_days'] = off_days
-        return output
-
-class County(db.Model, BaseModel):
+class UserReview(db.Model, StampedModel):
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
-    province_id = db.Column(db.Integer, db.ForeignKey('province.id'), nullable=False)
-    province = db.relationship('Province', backref="counties")
-    lat = db.Column(db.Float)
-    lng = db.Column(db.Float)
+    rating = db.Column(db.Integer, nullable=False)
+    body = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    reviewer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-class Province(db.Model, BaseModel):
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
-
-    def to_dict(self):
-        counties = [county.to_dict() for county in self.counties]
-        output = super(Province, self).to_dict()
-        output['counties'] = counties
-        return output
-
-class Category(db.Model, BaseModel):
+class PropertyReview(db.Model, StampedModel):
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
-    count = db.Column(db.Integer, nullable=False, default=0)
-    image = db.Column(db.String, nullable=False, default="todo") # TODO
+    rating = db.Column(db.Integer, nullable=False)
+    body = db.Column(db.String, nullable=False)
+    property_id = db.Column(db.Integer, db.ForeignKey('property.id'), nullable=False)
+    reviewer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+class Conversation(db.Model, StampedModel):
+
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    read = db.Column(db.Boolean, default=False)
+
+class Message(db.Model, StampedModel):
+
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String, nullable=False)
+    conversation_id = db.Column(db.Integer, db.ForeignKey('conversation.id'), nullable=False)
+    read = db.Column(db.Boolean, default=False)
+
+class Notification(db.Model, StampedModel):
+
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    read = db.Column(db.Boolean, default=False)
 
 class User(db.Model, StampedModel):
 
     id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.Integer, nullable=False)
     first = db.Column(db.String, nullable=False)
     last = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
@@ -88,9 +87,9 @@ class User(db.Model, StampedModel):
     phone = db.Column(db.String)
     dob = db.Column(db.DateTime)
     email_verified = db.Column(db.Boolean, nullable=False, default=False)
-    phone_verified = db.Column(db.Boolean, nullable=False, default=False)
     password = db.Column(db.String, nullable=False) # TODO - encrypt
     intro = db.Column(db.String)
+
 
     def to_dict(self):
         output = super(User, self).to_dict()
@@ -99,5 +98,13 @@ class User(db.Model, StampedModel):
 
 # Create API endpoints, which will be available at /api/<tablename> by
 # default. Allowed HTTP methods can be specified as well.
-for model in [User, Listing, County, Province, Category]:
+for model in [
+    User,
+    Property,
+    UserReview,
+    PropertyReview,
+    Message,
+    Notification,
+    Conversation
+]:
     api_manager.create_api(model, methods=['GET', 'POST', 'DELETE', 'PATCH'])

@@ -3,7 +3,7 @@ import flask
 import json
 from flask import render_template, send_from_directory
 from flask import jsonify, session, request, redirect, url_for
-from services import CountyService, UserService, ProvinceService, ListingService
+from services import UserService, ListingService
 from services import ApiException
 from gaf.models import *
 from gaf.constants import *
@@ -91,8 +91,6 @@ def response(**output):
 ### Services ###
 
 user_service = UserService()
-county_service = CountyService()
-province_service = ProvinceService()
 listing_service = ListingService()
 
 ### Pages ###
