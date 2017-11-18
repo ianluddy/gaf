@@ -1,17 +1,63 @@
 #navbar{
-    height: 50px;
+    height: 80px;
     width: 100%;
-    background-color: #aaa;
+    background-color: #252525;
+}
+
+#navbar-inner{
+    max-width: 900px;
+    margin: 0 auto;
+    height: 100%;
+}
+
+#logo{
+    background-color: rgb(249, 233, 55);
+    height: 100%;
+    width: 150px;
+    display: inline-block;
+}
+
+#logo a{
+    width: 100%;
+    height: 100%;
+    display: block;
+    font-size: 22px;
+    line-height: 75px;
+    text-indent: 48px;
+    text-decoration: none;
+}
+
+#navbar-tabs{
+    display: inline-block;
+    float: right;
+    height: 100%;
+}
+
+.navbar-tab{
+    display: inline-block;
+    height: 100%;
+    color: #fff;
+    font-size: 14px;
+    margin: 0 12px 0 12px;
+    line-height: 75px;
+}
+
+.navbar-tab a{
+    text-decoration: none;
+    color: #fff;
 }
 
 #footer{
-    height: 120px;
+    height: 150px;
     width: 100%;
-    background-color: #000;
+    background-color: #252525;
 }
 
 #body{
     min-height: 800px;
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: rgb(250, 250, 250);
 }
 
 body{

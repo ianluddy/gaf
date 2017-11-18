@@ -1,63 +1,18 @@
 import os
-import flask
-import json
-from flask import render_template, send_from_directory
-from flask import jsonify, session, request, redirect, url_for
-from services import UserService, ListingService
-from services import ApiException
-from gaf.models import *
-from gaf.constants import *
-
 from functools import wraps
 
-### Decorators ###
+import flask
+from flask import jsonify, session, redirect, url_for
+from flask import render_template, send_from_directory
 
-def parse_args(method='post', string_args=None, int_args=None, float_args=None, json_args=None, bool_args=None, datetime_args=None):
-    def actualDecorator(test_func):
-        @wraps(test_func)
-        def wrapper(*args, **kwargs):
+from gaf.constants import *
+from gaf import app
 
-            if method == 'get':
-                input = request.args
-            elif request.data:
-                input = json.loads(request.data)
-            else:
-                input = {}
+from services import ApiException
+from services import PropertyService, UserService
 
-            output = {}
-            if string_args:
-                for key in string_args:
-                    if key in input:
-                        output[key] = input[key]
 
-            if int_args:
-                for key in int_args:
-                    if key in input:
-                        output[key] = int(input[key]) if input[key] is not None else None
-
-            if float_args:
-                for key in float_args:
-                    if key in input:
-                        output[key] = float(input[key]) if input[key] is not None else None
-
-            if bool_args:
-                for key in bool_args:
-                    if key in input:
-                        output[key] = bool(input[key]) if input[key] is not None else None
-
-            if json_args:
-                for key in json_args:
-                    if input.get(key):
-                        output[key] = input[key]
-
-            if datetime_args:
-                for key in datetime_args:
-                    if input.get(key):
-                        output[key] = datetime.strptime(input[key], '%d-%m-%y')
-
-            return test_func(output, *args, **kwargs)
-        return wrapper
-    return actualDecorator
+### Helpers ###
 
 def login_required(f):
     @wraps(f)
@@ -66,8 +21,6 @@ def login_required(f):
             raise ApiException('Please login to continue', 401)
         return f(*args, **kwargs)
     return decorated_function
-
-### Handlers ###
 
 @app.errorhandler(ApiException)
 def handle_api_exception(error):
@@ -88,16 +41,39 @@ def response(**output):
         output['status'] = 200
     return flask.jsonify(**output)
 
+def render(template):
+    return render_template(template, **{'session': user_service.get_session()})
+
 ### Services ###
 
 user_service = UserService()
-listing_service = ListingService()
+listing_service = PropertyService()
 
 ### Pages ###
 
 @app.route('/')
-def root():
-    return render_template('index.html', **{'session': user_service.get_session()})
+def index():
+    return render('index.html')
+
+@app.route('/contact')
+def contact():
+    return render('contact.html')
+
+@app.route('/about')
+def about():
+    return render('about.html')
+
+@app.route('/agents')
+def agents():
+    return render('agents.html')
+
+@app.route('/register')
+def register():
+    return render('register.html')
+
+@app.route('/signin')
+def signin():
+    return render('signin.html')
 
 @app.route('/favicon.ico')
 def favicon():
@@ -106,3 +82,7 @@ def favicon():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def page_not_found(e):
+    return render_template('500.html'), 500

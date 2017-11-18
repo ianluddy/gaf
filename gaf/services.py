@@ -45,7 +45,7 @@ class SearchService(Service):
             return self.model_wrapper.search(search, page)
         return super(SearchService, self).get(id)
 
-class ListingService(SearchService):
+class PropertyService(SearchService):
     model_wrapper = PropertyWrapper()
 
 class UserService(Service):

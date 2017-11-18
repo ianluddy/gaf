@@ -5,7 +5,8 @@ GOOGLE_API_KEY = "AIzaSyC5WVwaakrs8CzWJZEhUl3cByp0T4FBOo0"
 PROPERTY_TYPES = {
     1: "Entire Property",
     2: "Room",
-    3: "Digs"
+    3: "Digs",
+    4: "Student Swap"
 }
 
 USER_TYPES = {
@@ -93,3 +94,6 @@ PROFILE_UPDATED = "Profile Updated"
 ADDED = "Added"
 UPDATED = "Updated"
 REMOVED = "Removed"
+
+
+LOREM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris maximus justo quam, at laoreet nulla malesuada vitae. Suspendisse pulvinar et augue et congue. Mauris sagittis ligula felis, et mollis massa consequat vel. Morbi imperdiet ut nulla non accumsan. Proin nec dignissim quam. Cras faucibus consectetur tellus at mattis. Donec quis gravida felis. Quisque turpis turpis, bibendum ut dictum eget, egestas vel orci. Quisque ac dui interdum, ornare mi in, finibus leo. Mauris nec consequat nisi. Proin elementum ullamcorper nunc. Nullam dictum risus at consectetur varius. Maecenas vestibulum molestie dolor, sit amet convallis massa dictum vitae. Ut semper lectus id est vehicula placerat."
