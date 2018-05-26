@@ -1,4 +1,3 @@
-
 const database = require('../utils/database.js');
 const collection = 'user';
 
