@@ -13,8 +13,7 @@ router.post("/auth", async (ctx) => {
   if ( true ) { // TODO
     ctx.body = {
       token: jwt.issue({
-        user: "user", // TODO
-        role: "admin"
+        user: username, // TODO
       })
     }
   } else {
