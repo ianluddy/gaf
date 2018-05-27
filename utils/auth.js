@@ -23,10 +23,12 @@ function JWTErrorHandler(ctx, next) {
 
 function JWTVerification() {
   return async (ctx, next) => {
-    ctx.state.user = jwtDecode(ctx.headers.authorization);
-    if( !(await userService.findOne({ email: ctx.state.user.email })) ) {
+    const token = jwtDecode(ctx.headers.authorization);
+    const user = await userService.findOne({ email: token.email });
+    if(!user) {
       ctx.throw(HttpStatus.UNAUTHORIZED);
     }
+    ctx.state.user = user;
     await next();
   };
 }

@@ -15,34 +15,44 @@ router.post("/login", async (ctx) => {
   }
 });
 
-router.use(auth.errorHandler()).use(auth.jwt());
-
-router.get("/user", auth.verificationHandler(), async (ctx) => {
-  ctx.body = await userService.find();
-  ctx.status = HttpStatus.OK;
-});
-
-router.post("/user", auth.verificationHandler(), async (ctx) => {
+router.post("/register", auth.verificationHandler(), async (ctx) => {
   await userService.insert(ctx.request.body);
   ctx.status = HttpStatus.CREATED;
 });
 
+router.use(auth.errorHandler()).use(auth.jwt());
+
 router.get("/user/:id", auth.verificationHandler(), async (ctx) => {
+  if (ctx.params.id != ctx.state.user._id)
+    ctx.throw(HttpStatus.UNAUTHORIZED);
+
   const query = {"_id": ObjectID(ctx.params.id)};
-  ctx.body = await userService.findOne(query);
+  const user = ctx.state.user;
+
+  ctx.body = await userService.findOne(query, user);
   ctx.status = HttpStatus.OK;
 });
 
 router.put("/user/:id", auth.verificationHandler(), async (ctx) => {
+  if (ctx.params.id != ctx.state.user._id)
+    ctx.throw(HttpStatus.UNAUTHORIZED);
+
   const query = {"_id": ObjectID(ctx.params.id)};
   const update = ctx.request.body;
-  ctx.body = await userService.update(query, update);
+  const user = ctx.state.user;
+
+  ctx.body = await userService.update(query, update, user);
   ctx.status = HttpStatus.OK;
 });
 
 router.delete("/user/:id", auth.verificationHandler(), async (ctx) => {
+  if (ctx.params.id != ctx.state.user._id)
+    ctx.throw(HttpStatus.UNAUTHORIZED);
+
   const query = {"_id": ObjectID(ctx.params.id)};
-  ctx.body = await userService.remove(query);
+  const user = ctx.state.user;
+
+  ctx.body = await userService.remove(query, user);
   ctx.status = HttpStatus.OK;
 });
 

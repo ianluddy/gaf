@@ -3,10 +3,6 @@ const errors = require('../utils/errors.js');
 const bcrypt = require("bcrypt");
 const userCollection = require('monk')(cfg.MONGO_URL).get('user');
 
-async function find() {
-  return userCollection.find({});
-}
-
 async function findOne(query) {
   return userCollection.findOne(query);
 }
@@ -48,7 +44,6 @@ async function validateEmail(email) {
     throw new errors.ApiError(errors.ERRORS.USER_EXISTS);
 }
 
-module.exports.find = find;
 module.exports.remove = remove;
 module.exports.findOne = findOne;
 module.exports.insert = insert;
