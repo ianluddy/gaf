@@ -1,9 +1,9 @@
 
-class ApiError extends Error {
-  constructor(err, details = {}) {
+export class ApiError extends Error {
+  constructor(err) {
     super();
 
-    const { code, message } = err || DEFAULT;
+    const { code, message } = err;
 
     this.code = code;
     this.message = message;
@@ -15,11 +15,8 @@ class ApiError extends Error {
   }
 }
 
-const ERRORS = {
+export const ERRORS = {
   USER_EXISTS: { code: 1000, message: 'Email address already in use' },
   USER_NOT_FOUND: { code: 1001, message: 'Email address not registered' },
   PASSWORD_INCORRECT: { code: 1002, message: 'Password is incorrect' },
-}
-
-module.exports.ERRORS = ERRORS;
-module.exports.ApiError = ApiError;
+};

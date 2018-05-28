@@ -1,8 +1,14 @@
+import { ObjectID } from 'mongodb';
+import {
+  jwtVerificationHandler,
+  jwtErrorHandler,
+  jwt,
+  jwtIssue,
+} from '../utils/auth';
+
 const Router = require('koa-router');
 const userService = require('../services/user.service.js');
-const { ObjectID } = require('mongodb').ObjectID;
 const HttpStatus = require('http-status-codes');
-const auth = require('../utils/auth.js');
 
 const router = new Router();
 
@@ -11,18 +17,18 @@ router.post('/login', async (ctx) => {
   const { password } = ctx.request.body;
   const user = await userService.validatePassword(email, password);
   if (user) {
-    ctx.body = { token: auth.issue({ email: user.email, id: user._id }) };
+    ctx.body = { token: jwtIssue({ email: user.email, id: user._id }) };
   }
 });
 
-router.post('/register', auth.verificationHandler(), async (ctx) => {
+router.post('/register', jwtVerificationHandler(), async (ctx) => {
   await userService.insert(ctx.request.body);
   ctx.status = HttpStatus.CREATED;
 });
 
-router.use(auth.errorHandler()).use(auth.jwt());
+router.use(jwtErrorHandler()).use(jwt());
 
-router.get('/user/:id', auth.verificationHandler(), async (ctx) => {
+router.get('/user/:id', jwtVerificationHandler(), async (ctx) => {
   if (ctx.params.id !== ctx.state.user._id.toString()) {
     ctx.throw(HttpStatus.UNAUTHORIZED);
   }
@@ -33,7 +39,7 @@ router.get('/user/:id', auth.verificationHandler(), async (ctx) => {
   ctx.status = HttpStatus.OK;
 });
 
-router.put('/user/:id', auth.verificationHandler(), async (ctx) => {
+router.put('/user/:id', jwtVerificationHandler(), async (ctx) => {
   if (ctx.params.id !== ctx.state.user._id.toString()) {
     ctx.throw(HttpStatus.UNAUTHORIZED);
   }
@@ -45,7 +51,7 @@ router.put('/user/:id', auth.verificationHandler(), async (ctx) => {
   ctx.status = HttpStatus.OK;
 });
 
-router.delete('/user/:id', auth.verificationHandler(), async (ctx) => {
+router.delete('/user/:id', jwtVerificationHandler(), async (ctx) => {
   if (ctx.params.id !== ctx.state.user._id.toString()) {
     ctx.throw(HttpStatus.UNAUTHORIZED);
   }
